@@ -107,5 +107,34 @@ namespace Chessington.GameEngine.Pieces
             }
             return moveList;
         }
+
+        public List<Square> GetKingMoves(Square currentPosition)
+        {
+            List<Square> moveList = new List<Square>();
+
+            int row = currentPosition.Row;
+            int col = currentPosition.Col;
+            
+            int[] array1 = { -1, 0, 1 };
+            int[] array2 = { -1, 0, 1 };
+
+            foreach (int value1 in array1)
+            {
+                foreach (int value2 in array2)
+                {
+                    if (value1 != 0 || value2 != 0)
+                    {
+                        bool inBoard = (GameSettings.BoardSize > row + value1 && row + value1 > -1) &&
+                                        (GameSettings.BoardSize > col + value2 && col + value2 > -1);
+ 
+                        if (inBoard)
+                        {
+                            moveList.Add(new Square(row + value1, col + value2));
+                        }
+                    }
+                }
+            }
+            return moveList;
+        }
     }
 }
