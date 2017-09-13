@@ -11,15 +11,14 @@ namespace Chessington.GameEngine.Pieces
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
             Square currentPosition = board.FindPiece(this);
+            List<Square> availableMoves = GetLateralMoves(currentPosition);
 
-            for (int row = 0; row < 8; row++)
+            foreach(Square move in availableMoves)
             {
-                yield return new Square(row, currentPosition.Col);
-            }
-            for (int col = 0; col < 8; col++)
-            {
-                yield return new Square(currentPosition.Row, col);
+                yield return move;
             }
         }
+
+        
     }
 }
