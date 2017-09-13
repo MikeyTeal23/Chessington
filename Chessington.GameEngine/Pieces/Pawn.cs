@@ -10,7 +10,6 @@ namespace Chessington.GameEngine.Pieces
         public Pawn(Player player)
             : base(player)
         {
-            NeverMoved = true;
         }
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
@@ -18,7 +17,7 @@ namespace Chessington.GameEngine.Pieces
             Square currentPosition = board.FindPiece(this);
 
             yield return StandardPawnMove(currentPosition);
-            if (this.NeverMoved)
+            if (NeverMoved)
             {
                 yield return FirstPawnMove(currentPosition);
             }
@@ -26,7 +25,7 @@ namespace Chessington.GameEngine.Pieces
 
         private Square StandardPawnMove(Square currentPosition)
         {
-            if (this.Player == 0)
+            if (Player == 0)
             {
                 return new Square(currentPosition.Row - 1, currentPosition.Col);
             }
@@ -39,7 +38,7 @@ namespace Chessington.GameEngine.Pieces
         
         private Square FirstPawnMove(Square currentPosition)
         {
-            if (this.Player == 0)
+            if (Player == 0)
             {
                 return new Square(currentPosition.Row - 2, currentPosition.Col);
             }

@@ -9,9 +9,8 @@ namespace Chessington.GameEngine.Pieces
         protected Piece(Player player)
         {
             Player = player;
+            NeverMoved = true;
         }
-
-        
 
         public bool NeverMoved { get; set; }
         public Player Player { get; private set; }
@@ -22,7 +21,7 @@ namespace Chessington.GameEngine.Pieces
         {
             var currentSquare = board.FindPiece(this);
             board.MovePiece(currentSquare, newSquare);
-            this.NeverMoved = false;
+            NeverMoved = false;
         }
     }
 }
