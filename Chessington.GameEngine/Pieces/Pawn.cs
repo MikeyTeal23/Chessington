@@ -17,13 +17,14 @@ namespace Chessington.GameEngine.Pieces
             Square currentPosition = board.FindPiece(this);
             List<Square> availableMoves = StandardPawnMove(currentPosition);
 
-            //yield return StandardPawnMove(currentPosition);
             if (NeverMoved)
             {
                 availableMoves.AddRange(FirstPawnMove(currentPosition));
             }
 
-            foreach (Square move in availableMoves)
+            List<Square> unblockedMoves = GetUnblockedAvailableMoves(availableMoves, board);
+
+            foreach (Square move in unblockedMoves)
             {
                 yield return move;
             }
@@ -44,8 +45,6 @@ namespace Chessington.GameEngine.Pieces
 
             return moveList;
         }
-
-        
         private List<Square> FirstPawnMove(Square currentPosition)
         {
             List<Square> moveList = new List<Square>();
@@ -60,6 +59,25 @@ namespace Chessington.GameEngine.Pieces
             }
 
             return moveList;
+        }
+
+        private List<Square> GetUnblockedAvailableMoves(List<Square> availableMoves, Board board)
+        {
+            List<Square> unblockedMoves = new List<Square>();
+
+            foreach (Square move in availableMoves)
+            {
+                if (board.GetPiece(move) == null)
+                {
+                    unblockedMoves.Add(move);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return unblockedMoves;
         }
     }
 }
