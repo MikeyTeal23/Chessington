@@ -15,37 +15,51 @@ namespace Chessington.GameEngine.Pieces
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
             Square currentPosition = board.FindPiece(this);
+            List<Square> availableMoves = StandardPawnMove(currentPosition);
 
-            yield return StandardPawnMove(currentPosition);
+            //yield return StandardPawnMove(currentPosition);
             if (NeverMoved)
             {
-                yield return FirstPawnMove(currentPosition);
+                availableMoves.AddRange(FirstPawnMove(currentPosition));
+            }
+
+            foreach (Square move in availableMoves)
+            {
+                yield return move;
             }
         }
 
-        private Square StandardPawnMove(Square currentPosition)
+        private List<Square> StandardPawnMove(Square currentPosition)
         {
+            List<Square> moveList = new List<Square>();
+
             if (Player == 0)
             {
-                return new Square(currentPosition.Row - 1, currentPosition.Col);
+                moveList.Add(new Square(currentPosition.Row - 1, currentPosition.Col));
             }
             else
             {
-                return new Square(currentPosition.Row + 1, currentPosition.Col);
+                moveList.Add(new Square(currentPosition.Row + 1, currentPosition.Col));
             }
+
+            return moveList;
         }
 
         
-        private Square FirstPawnMove(Square currentPosition)
+        private List<Square> FirstPawnMove(Square currentPosition)
         {
+            List<Square> moveList = new List<Square>();
+
             if (Player == 0)
             {
-                return new Square(currentPosition.Row - 2, currentPosition.Col);
+                moveList.Add(new Square(currentPosition.Row - 2, currentPosition.Col));
             }
             else
             {
-                return new Square(currentPosition.Row + 2, currentPosition.Col);
+                moveList.Add(new Square(currentPosition.Row + 2, currentPosition.Col));
             }
+
+            return moveList;
         }
     }
 }
